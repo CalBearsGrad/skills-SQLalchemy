@@ -1,6 +1,7 @@
 """Models and database functions for cars db."""
 
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 # Here's where we create the idea of our database. We're getting this through
 # the Flask-SQLAlchemy library. On db, we can find the `session`
@@ -17,7 +18,7 @@ class Human(db.Model):
 
     __tablename__ = "humans"
 
-    human_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    human_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     fname = db.Column(db.String(20), nullable=False)
     lname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
@@ -35,11 +36,11 @@ class Animal(db.Model):
     __tablename__ = "animals"
 
 
-    animal_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    animal_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     human_id = db.Column(db.Integer, db.ForeignKey("humans.human_id"), nullable=False)
     name = db.Column(db.String(20), nullable=False)
     animal_species = db.Column(db.String(20), nullable=False)
-    birth_year = db.Column(db.DateTime, nullable=False)
+    birth_year = db.Column(db.Integer)
 
     def __repr__(self):
         """Provide helpful representation of animal when printed."""

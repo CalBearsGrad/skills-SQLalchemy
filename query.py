@@ -10,6 +10,7 @@ by just their class name (not model.ClassName).
 """
 
 from model import *
+import datetime
 
 init_app()
 
@@ -18,14 +19,24 @@ init_app()
 # -----------------
 
 # Get the human with the id 2.
-q1 = None
+q1 = Human.query.get(2)
+print q1
+print q1.human_id
 
 # Get the *first* animal with the species 'fish'
 
-q2 = None
+#I kept hunting the white rabbit because birth_year was showing none. I thought 
+#there was an error with my model.py. I wasted a lot of time trying to fix something
+#that wasn't broken before I realized that the first fish has no birth_year. Duh. 
+
+q2 = Animal.query.filter_by(animal_species='fish').first();
+print q2
 
 # Get all of the animals for the human with the id 5 and the animal species 'dog'
-q3 = None
+q3 = Animal.query.filter_by(human_id=5, animal_species='dog').all();
+print q3
+[<Animal animal_id=9 human_id=5 name=Buster animal_species=dog birth_year=2011>, <Animal animal_id=10 human_id=5 name=Twinkie animal_species=dog birth_year=2014>]
+
 
 # Get all the animals that were born after 2015 (do not include animals without birth years).
 q4 = None
@@ -63,7 +74,16 @@ q8 = None
 
 def print_directory():
     """"""
-    pass
+    humans_and_animals = db.session.query(Human.fname, Human.lname, Animal.name, Animal.animal_species)
+    
+    for pair in humans_and_animals:
+
+    print "{} {} \n \t {} ({})".format()
+
+    SELECT employee_id, name FROM employees;
+>>> db.session.query(Employee.employee_id, Employee.name).all()
+
+[(1, u'Leonard'), (2, u'Liz'), (3, u'Maggie'), (4, u'Nadine')]
 
 # 2. Write a function, get_animals_by_name, which takes in a string representing
 #    an animal name (or part of an animal name) and *returns a list* of Animal
