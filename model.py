@@ -23,11 +23,14 @@ class Human(db.Model):
     lname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
 
+    animal = db.relationship('Animals')
+
     def __repr__(self):
         """Provide helpful representation of human when printed."""
 
         return "<Human human_id={} fname={} lname={} email={}>".format(self.user_id,
                                                self.fname, self.lname, self.email)
+
 
 
 class Animal(db.Model):
@@ -42,11 +45,15 @@ class Animal(db.Model):
     animal_species = db.Column(db.String(20), nullable=False)
     birth_year = db.Column(db.Integer)
 
+    human = db.relationship('Humans')
+
     def __repr__(self):
         """Provide helpful representation of animal when printed."""
 
         return "<Animal animal_id={} human_id={} name={} animal_species={} birth_year={}>".format(self.animal_id,
                                                self.human_id, self.name, self.animal_species, self.birth_year)
+
+
 
 # End Part 1
 

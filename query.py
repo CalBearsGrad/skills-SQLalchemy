@@ -74,16 +74,12 @@ q8 = None
 
 def print_directory():
     """"""
-    humans_and_animals = db.session.query(Human.fname, Human.lname, Animal.name, Animal.animal_species)
-    
-    for pair in humans_and_animals:
+    directory = db.session.query(Humans.fname, Humans.lname,
+                        Animal.name,
+                        Animal.animal_species).join(human_id).all()
 
-    print "{} {} \n \t {} ({})".format()
-
-    SELECT employee_id, name FROM employees;
->>> db.session.query(Employee.employee_id, Employee.name).all()
-
-[(1, u'Leonard'), (2, u'Liz'), (3, u'Maggie'), (4, u'Nadine')]
+    for Human_first_name, Human_last_name, Animal_name, animal_species in directory:      
+        print "{} {} \n \t {} ({}) ".format(Human_first_name, Human_last_name, Animal_name, animal_species)
 
 # 2. Write a function, get_animals_by_name, which takes in a string representing
 #    an animal name (or part of an animal name) and *returns a list* of Animal
@@ -91,7 +87,19 @@ def print_directory():
 
 def get_animals_by_name(name):
     """"""
-    pass
+    animal_names = db.session.query(Humans,
+                        Animals).outerjoin(human_id).all()
+    check_name = animal_names.query.filter(animal_names.name.like(%name%))
+
+    results = []
+
+    for name in animal_names:
+        if check_name:
+            results.append(check_name)
+    return results
+
+        else:
+            print animal_names.name, "-"
 
 # 3. Write a function, find_humans_by_animal_species, which takes in an animal
 #    species and *returns a list* of all of Human objects who have animals of
@@ -99,4 +107,16 @@ def get_animals_by_name(name):
 
 def find_humans_by_animal_species(species):
     """"""
-    pass
+    check_human = db.session.query(Humans,
+                        Animals).outerjoin(human_id).all()
+
+    results = []
+
+    for human in check_human:
+        if check_human.animal_species != None:
+            if species == check_human.animal_species:
+                results.append(human_object)
+    return results
+
+        else:
+            print "-"

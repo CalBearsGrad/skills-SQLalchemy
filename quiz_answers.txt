@@ -1,1 +1,12 @@
 Put your answers to the knowledge quiz here.
+1. B
+2. B
+3. A
+4. B
+5. B
+6. D 
+7. D
+8. B
+9. You can enforce referential integrity by making sure that each table has a column for a primary key with unique identifiers and, additionally, that each table that has a relationship to another contain a column with a foreign key that references the primary key in the other table. 
+10. Data normalization is a way to organize your database to avoid duplication and to allow for simple querying while maintaining referential integrity.
+11. 
