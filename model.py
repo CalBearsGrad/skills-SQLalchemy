@@ -23,7 +23,7 @@ class Human(db.Model):
     lname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
 
-    animal = db.relationship('Animals')
+    animal = db.relationship('Animal')
 
     def __repr__(self):
         """Provide helpful representation of human when printed."""
@@ -45,7 +45,7 @@ class Animal(db.Model):
     animal_species = db.Column(db.String(20), nullable=False)
     birth_year = db.Column(db.Integer)
 
-    human = db.relationship('Humans')
+    human = db.relationship('Human')
 
     def __repr__(self):
         """Provide helpful representation of animal when printed."""
