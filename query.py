@@ -35,23 +35,21 @@ print q2
 # Get all of the animals for the human with the id 5 and the animal species 'dog'
 q3 = Animal.query.filter_by(human_id=5, animal_species='dog').all();
 print q3
-[<Animal animal_id=9 human_id=5 name=Buster animal_species=dog birth_year=2011>, <Animal animal_id=10 human_id=5 name=Twinkie animal_species=dog birth_year=2014>]
-
 
 # Get all the animals that were born after 2015 (do not include animals without birth years).
-q4 = None
+q4 = Animal.query.filter(Animal.birth_year > 2015)
 
 # Find the humans with first names that start with 'J'
-q5 = None
+q5 = Humans.query.filter(Humans.fname.like('%J%'))
 
 # Find all the animals without birth years in the database.
-q6 = None
+q6 = Animal.query.filter_by(birth_year is None).all();
 
 # Find all animals that are either fish or rabbits
-q7 = None
+q7 = Animal.query.filter( (Animal.animal_species == 'fish') | (Animal.animal_species == 'rabbit') )
 
 # Find all the humans whose email addresses do not contain 'gmail'
-q8 = None
+q8 = Human.query.filter(Human.email.isnot('gmail')) 
 
 # ---------------------
 # PART THREE: FUNCTIONS
@@ -87,19 +85,17 @@ def print_directory():
 
 def get_animals_by_name(name):
     """"""
-    animal_names = db.session.query(Humans,
-                        Animals).outerjoin(human_id).all()
-    check_name = animal_names.query.filter(animal_names.name.like(%name%))
+    animal_names = db.session.query(humans,
+                        animals).outerjoin(human_id).all()
+    check_name = animal_names.query.filter(animal_names.name.like(name))
 
     results = []
 
     for name in animal_names:
         if check_name:
             results.append(check_name)
-    return results
+            return results
 
-        else:
-            print animal_names.name, "-"
 
 # 3. Write a function, find_humans_by_animal_species, which takes in an animal
 #    species and *returns a list* of all of Human objects who have animals of
@@ -117,6 +113,3 @@ def find_humans_by_animal_species(species):
             if species == check_human.animal_species:
                 results.append(human_object)
     return results
-
-        else:
-            print "-"
